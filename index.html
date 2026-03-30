@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Birthday ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  background: #ffd6e7;
+  font-family: Arial;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* BACKGROUND */
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.heart, .cake {
+  position: absolute;
+  font-size: 24px;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); opacity: 0; }
+  to { transform: translateY(-10vh); opacity: 1; }
+}
+
+/* CONFETTI */
+.confetti {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: red;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to { transform: translateY(100vh); }
+}
+
+/* SCREEN */
+.screen {
+  position: relative;
+  z-index: 1;
+  display: none;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.active {
+  display: flex;
+}
+
+h1, h2 {
+  color: #ff3399;
+}
+
+p {
+  color: #ff3399;
+  font-size: 20px;
+  max-width: 500px;
+}
+
+button {
+  padding: 12px 25px;
+  border-radius: 20px;
+  border: none;
+  background: #ff66a3;
+  color: white;
+  cursor: pointer;
+  margin: 10px;
+  position: relative;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+img {
+  width: 140px;
+  border-radius: 10px;
+}
+
+/* ANIMATION */
+.fade {
+  animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="bg" id="bg"></div>
+
+<audio id="music" loop>
+  <source src="song.mp3">
+</audio>
+
+<!-- SCREENS -->
+<div id="screen1" class="screen active"><h1 id="count">3</h1></div>
+
+<div id="screen2" class="screen">
+  <p class="fade">Loading your birthday surprise... 🎂</p>
+</div>
+
+<div id="screen3" class="screen">
+  <h1 class="fade">Hey My Love ❤️</h1>
+  <button onclick="start()">🎁 Start the surprise</button>
+</div>
+
+<div id="screen4" class="screen">
+  <p class="fade">You changed my life forever 💕</p>
+  <button onclick="next(5)">Next ➡️</button>
+</div>
+
+<div id="screen5" class="screen">
+  <h1>Our Memories 📸</h1>
+  <img src="photo1.jpg">
+  <img src="photo2.jpg">
+  <img src="photo3.jpg">
+  <button onclick="next(6)">Next ➡️</button>
+</div>
+
+<div id="screen6" class="screen">
+  <h2>Will You Always Be Mine? 💖</h2>
+  <button onclick="yes()">YES ❤️</button>
+  <button id="noBtn" onmouseover="runAway()">NO 😜</button>
+</div>
+
+<div id="screen7" class="screen">
+  <h1>💖 A Special Message For You 💖</h1>
+  <p id="finalMsg"></p>
+  <h2>🎂 Happy Birthday ❤️</h2>
+</div>
+
+<script>
+
+// background floating
+setInterval(() => {
+  let el = document.createElement("div");
+  el.className = Math.random()>0.5?"heart":"cake";
+  el.innerHTML = el.className=="heart"?"❤️":"🎂";
+  el.style.left = Math.random()*100+"vw";
+  el.style.animationDuration = (3+Math.random()*5)+"s";
+  document.getElementById("bg").appendChild(el);
+  setTimeout(()=>el.remove(),8000);
+},500);
+
+// countdown
+let n=3;
+let timer=setInterval(()=>{
+  n--;
+  if(n==0){
+    clearInterval(timer);
+    show(2);
+    setTimeout(()=>show(3),2000);
+  } else document.getElementById("count").innerText=n;
+},1000);
+
+// show screen
+function show(x){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById("screen"+x).classList.add("active");
+}
+
+// start
+function start(){
+  document.getElementById("music").play();
+  show(4);
+}
+
+function next(x){ show(x); }
+
+// YES
+function yes(){
+  show(7);
+  confetti();
+  typeText();
+}
+
+// NO button run away 😂
+function runAway(){
+  let btn=document.getElementById("noBtn");
+  btn.style.position="absolute";
+  btn.style.left=Math.random()*80+"vw";
+  btn.style.top=Math.random()*80+"vh";
+}
+
+// confetti 🎇
+function confetti(){
+  for(let i=0;i<100;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=["red","pink","yellow","blue"][Math.floor(Math.random()*4)];
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+
+// typing text
+function typeText(){
+  let msg="You are my happiness, my peace, my everything ❤️ I promise to love you forever and make every moment special 💍";
+  let i=0;
+  function t(){
+    if(i<msg.length){
+      document.getElementById("finalMsg").innerHTML+=msg.charAt(i);
+      i++;
+      setTimeout(t,40);
+    }
+  }
+  t();
+}
+
+</script>
+
+</body>
+</html>

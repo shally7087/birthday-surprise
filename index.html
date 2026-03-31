@@ -3,16 +3,18 @@
 <head>
 <title>Happy Birthday ❤️</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   margin: 0;
-  background: #ffd6e7;
+  background: linear-gradient(to top, #ffd6e7, #fff0f5);
   font-family: Arial;
   text-align: center;
   overflow: hidden;
 }
 
-/* BACKGROUND */
+/* background animation */
 .bg {
   position: fixed;
   width: 100%;
@@ -31,20 +33,7 @@ body {
   to { transform: translateY(-10vh); opacity: 1; }
 }
 
-/* CONFETTI */
-.confetti {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: red;
-  animation: fall 3s linear forwards;
-}
-
-@keyframes fall {
-  to { transform: translateY(100vh); }
-}
-
-/* SCREEN */
+/* screens */
 .screen {
   position: relative;
   z-index: 1;
@@ -53,32 +42,40 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 20px;
+  padding: 30px 15px;
 }
 
 .active {
   display: flex;
 }
 
-h1, h2 {
+/* responsive text */
+h1 {
   color: #ff3399;
+  font-size: 8vw;
+}
+
+h2 {
+  color: #ff3399;
+  font-size: 6vw;
 }
 
 p {
   color: #ff3399;
-  font-size: 20px;
-  max-width: 500px;
+  font-size: 5vw;
+  max-width: 90%;
 }
 
+/* buttons */
 button {
-  padding: 12px 25px;
-  border-radius: 20px;
-  border: none;
+  padding: 15px 30px;
+  font-size: 5vw;
+  border-radius: 25px;
   background: #ff66a3;
   color: white;
-  cursor: pointer;
+  border: none;
   margin: 10px;
-  position: relative;
+  cursor: pointer;
 }
 
 button:hover {
@@ -86,11 +83,12 @@ button:hover {
 }
 
 img {
-  width: 140px;
+  width: 40vw;
+  max-width: 200px;
   border-radius: 10px;
 }
 
-/* ANIMATION */
+/* fade */
 .fade {
   animation: fadeIn 1.5s ease;
 }
@@ -100,7 +98,6 @@ img {
   to { opacity: 1; }
 }
 </style>
-
 </head>
 
 <body>
@@ -111,23 +108,33 @@ img {
   <source src="song.mp3">
 </audio>
 
-<!-- SCREENS -->
-<div id="screen1" class="screen active"><h1 id="count">3</h1></div>
+<!-- SCREEN 1 -->
+<div id="screen1" class="screen active">
+  <h1 id="count">3</h1>
+</div>
 
+<!-- SCREEN 2 -->
 <div id="screen2" class="screen">
   <p class="fade">Loading your birthday surprise... 🎂</p>
 </div>
 
+<!-- SCREEN 3 -->
 <div id="screen3" class="screen">
-  <h1 class="fade">Hey My Love ❤️</h1>
+  <h1 class="fade">Hey Meri Sardarni ji ❤️</h1>
+  <p class="fade">Aaj ka din sirf aapke liye special hai 💖</p>
   <button onclick="start()">🎁 Start the surprise</button>
 </div>
 
+<!-- SCREEN 4 -->
 <div id="screen4" class="screen">
-  <p class="fade">You changed my life forever 💕</p>
+  <p class="fade">
+    Meri Sardarni ji, you changed my life forever 💕<br>
+    Jab se aap meri life me aaye ho, sab kuch beautiful ho gaya ❤️
+  </p>
   <button onclick="next(5)">Next ➡️</button>
 </div>
 
+<!-- SCREEN 5 -->
 <div id="screen5" class="screen">
   <h1>Our Memories 📸</h1>
   <img src="photo1.jpg">
@@ -136,21 +143,23 @@ img {
   <button onclick="next(6)">Next ➡️</button>
 </div>
 
+<!-- SCREEN 6 -->
 <div id="screen6" class="screen">
   <h2>Will You Always Be Mine? 💖</h2>
   <button onclick="yes()">YES ❤️</button>
   <button id="noBtn" onmouseover="runAway()">NO 😜</button>
 </div>
 
+<!-- FINAL SCREEN -->
 <div id="screen7" class="screen">
   <h1>💖 A Special Message For You 💖</h1>
   <p id="finalMsg"></p>
-  <h2>🎂 Happy Birthday ❤️</h2>
+  <h2>🎂 Happy Birthday Meri Sardarni ji ❤️</h2>
 </div>
 
 <script>
 
-// background floating
+// floating hearts & cakes
 setInterval(() => {
   let el = document.createElement("div");
   el.className = Math.random()>0.5?"heart":"cake";
@@ -184,16 +193,16 @@ function start(){
   show(4);
 }
 
+// next
 function next(x){ show(x); }
 
 // YES
 function yes(){
   show(7);
-  confetti();
   typeText();
 }
 
-// NO button run away 😂
+// NO run away
 function runAway(){
   let btn=document.getElementById("noBtn");
   btn.style.position="absolute";
@@ -201,21 +210,10 @@ function runAway(){
   btn.style.top=Math.random()*80+"vh";
 }
 
-// confetti 🎇
-function confetti(){
-  for(let i=0;i<100;i++){
-    let c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=["red","pink","yellow","blue"][Math.floor(Math.random()*4)];
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000);
-  }
-}
-
-// typing text
+// typing message
 function typeText(){
-  let msg="You are my happiness, my peace, my everything ❤️ I promise to love you forever and make every moment special 💍";
+  let msg="Meri Sardarni ji 💖, aap meri life ka sabse beautiful part ho. Aapke bina sab kuch adhoora lagta hai. Main promise karta hoon ki main hamesha aapke saath rahunga, aapko khush rakhunga aur aapse hamesha itna hi pyaar karta rahunga 💍❤️";
+  
   let i=0;
   function t(){
     if(i<msg.length){
